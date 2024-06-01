@@ -1,32 +1,50 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using MVCBookShop.Models;
 using System.Diagnostics;
+using System.Net;
+using System.Reflection.Metadata.Ecma335;
 
 namespace MVCBookShop.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly BookStoreContext _context;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(BookStoreContext context)
         {
-            _logger = logger;
+                _context = context;
         }
-
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+           var books = await _context.WritingBook
+                .Include(b => b.Book)
+                    .ThenInclude(p => p.Publisher)
+                .Include(w => w.Writing)
+                    .ThenInclude(a => a.Author)
+                .ToListAsync();
+
+            return View(books);
         }
-
-        public IActionResult Privacy()
+        public async Task<IActionResult> Details(int? id)
         {
-            return View();
-        }
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            if (id == null)
+            {
+                return NotFound();
+            } 
+                var book = await _context.WritingBook
+                    .Include(b => b.Book)
+                        .ThenInclude(p => p.Publisher)
+                    .Include(w => w.Writing)
+                        .ThenInclude(a => a.Author)
+                    .FirstOrDefaultAsync(wb => wb.Book.Id == id);
+                if (book == null)
+                {
+                    return NotFound();
+                }
+                return View(book);
         }
     }
 }

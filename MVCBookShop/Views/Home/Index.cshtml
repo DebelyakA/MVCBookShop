@@ -1,8 +1,35 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model IEnumerable<WritingBook>
+
+@{
+    ViewData["Title"] = "Books List";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<h1>Books List</h1>
+
+<div class="container mt-5">
+    <div class="row">
+        @foreach (var item in Model)
+        {
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="@item.Book.ImageLink" class="card-img-top" alt="@item.Book.Title">
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Book.Title</h5>
+                        <p class="card-text">Автор: @item.Writing.Author.FirstName @item.Writing.Author.SecondName</p>
+                        <p class="card-text">Год выпуска: @item.Book.Year</p>
+                        <p class="card-text">Цена: @item.Book.Price</p>
+                        <p class="card-text">Описание: @item.Book.Description</p>
+                        <p class="card-text">Издатель: @item.Book.Publisher?.Name</p>
+                    </div>
+                    <div class="card-footer">
+                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Book.Id" class="btn btn-primary">Подробнее</a>
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+                            <input type="hidden" name="bookId" value="@item.Book.Id" />
+                            <button type="submit" class="btn btn-success">В корзину</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
 </div>

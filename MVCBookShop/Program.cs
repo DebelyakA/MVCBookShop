@@ -1,3 +1,8 @@
+
+
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
+
 namespace MVCBookShop
 {
     public class Program
@@ -8,14 +13,24 @@ namespace MVCBookShop
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddDbContext<BookStoreContext>();
+            builder.Services.AddSession(options =>
+            {
+                options.Cookie.HttpOnly = true;
+                options.Cookie.IsEssential = true;
+            }); ;
+            builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+                       .AddCookie(options =>
+                       {
+                           options.LoginPath = "/Auth/Index"; 
+                           options.LogoutPath = "/Auth/Logout";
+                       });
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
 
@@ -24,7 +39,10 @@ namespace MVCBookShop
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.MapControllerRoute(
                 name: "default",

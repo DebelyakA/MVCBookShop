@@ -1,0 +1,44 @@
+﻿@model MVCBookShop.Models.VIewModel.UserProfileViewModel
+
+@{
+    ViewData["Title"] = "User Profile";
+}
+
+<h2>User Profile</h2>
+
+<div>
+    <h3>Name: @Model.Name</h3>
+    <h3>Login: @Model.Login</h3>
+</div>
+
+<h2>Orders</h2>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th>Book Title</th>
+            <th>Price</th>
+            <th>Authors</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var order in Model.Orders)
+        {
+            <tr>
+                <td>@order.DateTime</td>
+                <td>@order.BookTitle</td>
+                <td>@order.Price.ToString("c")</td>
+                <td>
+                    @foreach (var author in order.Authors)
+                    {
+                        <div>@author.FirstName @author.SecondName</div>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<form asp-controller="Account" asp-action="Logout" method="post">
+    <button type="submit" class="btn btn-danger">Logout</button>
+</form>

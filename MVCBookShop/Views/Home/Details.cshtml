@@ -1,0 +1,50 @@
+﻿@model WritingBook
+
+@{
+    ViewData["Title"] = "Book Details";
+}
+
+<h1>@Model.Book.Title</h1>
+
+<div>
+    <dl class="row">
+        <dt class="col-sm-2">
+            Автор:
+        </dt>
+        <dd class="col-sm-10">
+            <!-- Ссылка на детали автора -->
+            <a asp-controller="Author" asp-action="Details" asp-route-id="@Model.Writing.Author.Id">@Model.Writing.Author.FirstName @Model.Writing.Author.SecondName</a>
+        </dd>
+        <dt class="col-sm-2">
+            Год:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Book.Year
+        </dd>
+        <dt class="col-sm-2">
+            Цена:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Book.Price
+        </dd>
+        <dt class="col-sm-2">
+            Описание:
+        </dt>
+        <dd class="col-sm-10">
+            @Model.Book.Description
+        </dd>
+        <dt class="col-sm-2">
+            Издатель:
+        </dt>
+        <dd class="col-sm-10">
+            <!-- Ссылка на детали издателя -->
+            <a asp-controller="Publisher" asp-action="Details" asp-route-id="@Model.Book.Publisher.Id">@Model.Book.Publisher.Name</a>
+        </dd>
+    </dl>
+    <div class="card-footer">
+        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+            <input type="hidden" name="bookId" value="@Model.Book.Id" />
+            <button type="submit" class="btn btn-success">В корзину</button>
+        </form>
+    </div>
+</div>
