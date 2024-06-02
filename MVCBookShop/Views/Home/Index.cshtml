@@ -13,20 +13,32 @@
             <div class="col-md-4 mb-4">
                 <div class="card h-100">
                     <img src="@item.Book.ImageLink" class="card-img-top" alt="@item.Book.Title">
-                    <div class="card-body">
+                    <div class="card-body d-flex flex-column">
                         <h5 class="card-title">@item.Book.Title</h5>
                         <p class="card-text">Автор: @item.Writing.Author.FirstName @item.Writing.Author.SecondName</p>
-                        <p class="card-text">Год выпуска: @item.Book.Year</p>
-                        <p class="card-text">Цена: @item.Book.Price</p>
-                        <p class="card-text">Описание: @item.Book.Description</p>
-                        <p class="card-text">Издатель: @item.Book.Publisher?.Name</p>
+                        <div class="row mb-3">
+                            <div class="col">
+                                <p class="card-text">Издатель: @item.Book.Publisher?.Name</p>
+                            </div>
+                            <div class="col ms-auto text-end">
+                                <p class="card-text">@item.Book.Year г.</p>
+                            </div>
+                        </div>
+                        <h5 class="card-text mt-auto ms-auto text-end">@item.Book.Price ₽</h5>
+                        @*<p class="card-text">Описание: @item.Book.Description</p>*@
                     </div>
                     <div class="card-footer">
-                        <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Book.Id" class="btn btn-primary">Подробнее</a>
-                        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
-                            <input type="hidden" name="bookId" value="@item.Book.Id" />
-                            <button type="submit" class="btn btn-success">В корзину</button>
-                        </form>
+                        <div class="row">
+                            <div class="col">
+                                <a asp-controller="Home" asp-action="Details" asp-route-id="@item.Book.Id" class="btn btn-primary">Подробнее</a>
+                            </div>
+                            <div class="col ms-auto text-end">
+                            <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
+                                <input type="hidden" name="bookId" value="@item.Book.Id" />
+                                <button type="submit" class="btn btn-success">В корзину</button>
+                            </form>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
