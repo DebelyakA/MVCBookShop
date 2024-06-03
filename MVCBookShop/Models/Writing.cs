@@ -17,5 +17,7 @@ namespace MVCBookShop.Models
         [Required]
         public Author Author { get; set; }
         public string? Description { get; set; }
+
+        public ICollection<WritingBook> WritingBooks { get; set; } = new List<WritingBook>();
     }
 }

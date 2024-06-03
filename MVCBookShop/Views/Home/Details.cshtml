@@ -13,7 +13,7 @@
         </dt>
         <dd class="col-sm-10">
             <!-- Ссылка на детали автора -->
-            <a asp-controller="Author" asp-action="Details" asp-route-id="@Model.Writing.Author.Id">@Model.Writing.Author.FirstName @Model.Writing.Author.SecondName</a>
+            <a asp-controller="Details" asp-action="AuthorIndex" asp-route-id="@Model.Writing.Author.Id">@Model.Writing.Author.FirstName @Model.Writing.Author.SecondName</a>
         </dd>
         <dt class="col-sm-2">
             Год:
@@ -38,7 +38,7 @@
         </dt>
         <dd class="col-sm-10">
             <!-- Ссылка на детали издателя -->
-            <a asp-controller="Publisher" asp-action="Details" asp-route-id="@Model.Book.Publisher.Id">@Model.Book.Publisher.Name</a>
+            <a asp-controller="Details" asp-action="PublisherIndex" asp-route-id="@Model.Book.Publisher.Id">@Model.Book.Publisher.Name</a>
         </dd>
     </dl>
     <div class="card-footer">

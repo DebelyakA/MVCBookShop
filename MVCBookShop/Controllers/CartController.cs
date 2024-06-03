@@ -24,6 +24,7 @@ namespace MVCBookShop.Controllers
             return View(cart);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Checkout()
         {

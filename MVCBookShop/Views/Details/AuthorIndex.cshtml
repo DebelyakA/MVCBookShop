@@ -1,0 +1,24 @@
+﻿@model MVCBookShop.Models.Author
+
+<h2>@Model.SecondName @Model.FirstName</h2>
+
+
+<h3>Произведения:</h3>
+
+@foreach (var writing in Model.Writings)
+{
+    <div>
+        <h4><a href="@Url.Action("WritingIndex", "Details", new { id = writing.Id })">@writing.Title</a></h4>
+        <p>@writing.Year</p>
+
+        <h5>Книги, содержащие это произведение:</h5>
+        <ul>
+            @foreach (var book in writing.WritingBooks.Select(wb => wb.Book))
+            {
+                <li>
+                    <a href="@Url.Action("Details", "Home", new { id = book.Id })">@book.Title</a> - @book.Year
+                </li>
+            }
+        </ul>
+    </div>
+}

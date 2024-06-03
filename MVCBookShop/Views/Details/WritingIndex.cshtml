@@ -1,0 +1,16 @@
+﻿@model MVCBookShop.Models.Writing
+
+<h2>@Model.Title</h2>
+
+<p>@Model.Description</p>
+
+<h3>Книги, содержащие это произведение:</h3>
+
+<ul>
+    @foreach (var book in Model.WritingBooks.Select(wb => wb.Book))
+    {
+        <li>
+            <a href="@Url.Action("Details", "Home", new { id = book.Id })">@book.Title</a> - @book.Year
+        </li>
+    }
+</ul>
