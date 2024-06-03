@@ -4,47 +4,66 @@
     ViewData["Title"] = "Book Details";
 }
 
-<h1>@Model.Book.Title</h1>
-
 <div>
-    <dl class="row">
-        <dt class="col-sm-2">
-            Автор:
-        </dt>
-        <dd class="col-sm-10">
-            <!-- Ссылка на детали автора -->
-            <a asp-controller="Details" asp-action="AuthorIndex" asp-route-id="@Model.Writing.Author.Id">@Model.Writing.Author.FirstName @Model.Writing.Author.SecondName</a>
-        </dd>
-        <dt class="col-sm-2">
-            Год:
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Book.Year
-        </dd>
-        <dt class="col-sm-2">
-            Цена:
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Book.Price
-        </dd>
-        <dt class="col-sm-2">
-            Описание:
-        </dt>
-        <dd class="col-sm-10">
-            @Model.Book.Description
-        </dd>
-        <dt class="col-sm-2">
-            Издатель:
-        </dt>
-        <dd class="col-sm-10">
-            <!-- Ссылка на детали издателя -->
-            <a asp-controller="Details" asp-action="PublisherIndex" asp-route-id="@Model.Book.Publisher.Id">@Model.Book.Publisher.Name</a>
-        </dd>
-    </dl>
-    <div class="card-footer">
-        <form asp-controller="Cart" asp-action="AddToCart" method="post" class="d-inline">
-            <input type="hidden" name="bookId" value="@Model.Book.Id" />
-            <button type="submit" class="btn btn-success">В корзину</button>
-        </form>
+    <div class="row">
+        <div class="col">
+            <img src="@Model.Book.ImageLink" class="card-img-top" alt="@Model.Book.Title">
+        </div>
+        <div class="col">
+            <h1>@Model.Book.Title</h1>
+            <dl class="row">
+                <dt class="col-sm-4">
+                    Авторство:
+                </dt>
+                <dd class="col-sm-10">
+                    <!-- Ссылка на детали автора -->
+                    <a asp-controller="Details" asp-action="AuthorIndex" asp-route-id="@Model.Writing.Author.Id">@Model.Writing.Author.FirstName @Model.Writing.Author.SecondName</a>
+                </dd>
+                <dt class="col-sm-4">
+                    Издатель:
+                </dt>
+                <dd class="col-sm-10">
+                    <!-- Ссылка на детали издателя -->
+                    <a asp-controller="Details" asp-action="PublisherIndex" asp-route-id="@Model.Book.Publisher.Id">@Model.Book.Publisher.Name</a>
+                </dd>
+                <dt class="col-sm-4">
+                    Год издания:
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Book.Year
+                </dd>
+                <dt class="col-sm-4">
+                    Описание:
+                </dt>
+                <dd class="col-sm-10">
+                    @Model.Book.Description
+                </dd>
+            </dl>
+            <div class="card-footer">
+                <div class="row">
+                    <div class="col d-flex justify-content-start ">
+                        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+                            <input type="hidden" name="bookId" value="@Model.Book.Id" />
+                            <button type="submit" class="btn btn-success">В корзину</button>
+                        </form>
+                        <p class="card-text ms-3">@Model.Book.Price ₽</p>
+                    </div>
+                    <div class="col d-flex justify-content-end">
+                        <span id="clipboardLabel" style="display:none; color:blue;">Скопировано!</span>
+                        <button id="shareBtn" class="btn btn-primary">Поделиться</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+
+<script>
+    document.getElementById('shareBtn').addEventListener('click', function () {
+        const url = window.location.href;
+        navigator.clipboard.writeText(url).then(() => {
+            document.getElementById('clipboardLabel').style.display = 'inline';
+            setTimeout(() => document.getElementById('clipboardLabel').style.display = 'none', 2000); // Hide after 2 seconds
+        }).catch(err => console.error('Не получилось скопировать:', err));
+    });
+</script>
