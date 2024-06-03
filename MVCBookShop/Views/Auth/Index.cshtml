@@ -4,15 +4,17 @@
     ViewData["Title"] = "Book Details";
 }
 
-<form method="post" asp-controller="Auth" asp-action="Login">
-    <div class="form-group">
-        <label for="login">Логин:</label>
-        <input type="text" class="form-control" id="login" name="login" required>
-    </div>
-    <div class="form-group">
-        <label for="password">Пароль:</label>
-        <input type="password" class="form-control" id="password" name="password" required>
-    </div>
-    <button type="submit" class="btn btn-primary">Войти</button>
-    <p>Если у вас еще нет аккаунта, <a asp-controller="Auth" asp-action="RegisterIndex">зарегистрируйтесь</a>.</p>
-</form>
+<div class="center-container">
+    <form method="post" asp-controller="Auth" asp-action="Login">
+        <div class="form-group">
+            <label for="login">Логин:</label>
+            <input type="text" class="form-control" id="login" name="login" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Пароль:</label>
+            <input type="password" class="form-control" id="password" name="password" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Войти</button>
+        <p>Если у вас еще нет аккаунта, <a asp-controller="Auth" asp-action="RegisterIndex">зарегистрируйтесь</a>.</p>
+    </form>
+</div>
