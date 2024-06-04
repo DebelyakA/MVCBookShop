@@ -12,6 +12,11 @@
     <div class="col">
     @if (!string.IsNullOrEmpty(Model.ImageLink))
     {
+            <style>
+                img {
+                    filter: drop-shadow(0px 0px 2px black);
+                }
+            </style>
         <img src="@Model.ImageLink" alt="Image of @Model.Name" />
     }
     </div>
