@@ -59,6 +59,7 @@ namespace MVCBookShop.Controllers
         {
             HttpContext.Session.Clear();
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            TempData["Message"] = "Выход успешно осуществлен!";
             return RedirectToAction("Index", "Home");
         }
     }

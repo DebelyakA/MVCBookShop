@@ -48,3 +48,17 @@ else
         <button type="submit" class="btn btn-primary">Checkout</button>
     </form>
 }
+
+@{
+    string message = TempData["Message"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        var message = '@Html.Raw(message)';
+        window.onload = function () {
+            alert(message);
+        };
+    </script>
+}

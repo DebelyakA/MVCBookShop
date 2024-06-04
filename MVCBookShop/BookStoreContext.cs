@@ -13,7 +13,7 @@ namespace MVCBookShop
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=booksweb; User Id = postgres; Password=VfhbbycrbqGjcfl;TrustServerCertificate=True;");
+            optionsBuilder.UseNpgsql("Host=localhost; Port=5432; Database=booksweb; User Id = postgres; Password=29032004;TrustServerCertificate=True;");
         }
 
         public DbSet<Author> Author { get; set; }

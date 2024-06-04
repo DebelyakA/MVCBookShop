@@ -36,6 +36,11 @@ namespace MVCBookShop.Controllers
             }
 
             var cart = GetCart();
+            if (cart == null)
+            {
+                TempData["Message"] = "Ваша корзина пуста!";
+                return RedirectToAction("Index", "Home");
+            }
             foreach (var item in cart.Items)
             {
                 for (int i = 0; i < item.Quantity; i++)
@@ -53,6 +58,7 @@ namespace MVCBookShop.Controllers
 
             await _context.SaveChangesAsync();
             HttpContext.Session.Remove("Cart");
+            TempData["Message"] = "Заказ успешно оформлен!";
 
             return RedirectToAction("Index", "Home");
         }
@@ -71,7 +77,7 @@ namespace MVCBookShop.Controllers
             var cart = GetCart();
             cart.AddItem(writingBook.Book);
             SaveCart(cart);
-
+            TempData["Message"] = "Товар успешно добавлен в корзину!";
             return RedirectToAction("Index","Home");
         }
 
@@ -80,7 +86,7 @@ namespace MVCBookShop.Controllers
             var cart = GetCart();
             cart.RemoveItem(bookId);
             SaveCart(cart);
-
+            TempData["Message"] = "Товар успешно удален из корзины!";
             return RedirectToAction("Index");
         }
 

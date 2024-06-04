@@ -42,3 +42,17 @@
 <form asp-controller="Account" asp-action="Logout" method="post">
     <button type="submit" class="btn btn-danger">Logout</button>
 </form>
+
+@{
+    string message = TempData["Message"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        var message = '@Html.Raw(message)';
+        window.onload = function () {
+            alert(message);
+        };
+    </script>
+}

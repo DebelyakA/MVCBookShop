@@ -32,7 +32,8 @@ namespace MVCBookShop.Controllers
            var user = await _context.User.FirstOrDefaultAsync(x => x.Login == login);
             if (user == null || !BCrypt.Net.BCrypt.Verify(password, user.Password))
             {
-                return Unauthorized();
+                TempData["Message"] = "Неверный логин или пароль";
+                return RedirectToAction("Index", "Auth");
             }
             var claims = new List<Claim>
             {
@@ -43,8 +44,12 @@ namespace MVCBookShop.Controllers
             var authProperties = new AuthenticationProperties();
 
             await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(claimsIdentity), authProperties);
+            if(user.Name != null)
+            {
+                TempData["Message"] = $"{user.Name}, добро пожаловать!";
+            } else TempData["Message"] = $"{user.Login}, добро пожаловать!";
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Account");
         }
 
         public async Task<ActionResult<string>> Register([FromForm] string login, [FromForm] string password)
@@ -54,7 +59,7 @@ namespace MVCBookShop.Controllers
             user.Password = BCrypt.Net.BCrypt.HashPassword(password);
             await _context.User.AddAsync(user);
             await _context.SaveChangesAsync();
-
+            TempData["Message"] = "Регистрация прошла успешно!";
             return RedirectToAction("Index", "Auth");
 
         }

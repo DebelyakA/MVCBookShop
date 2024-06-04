@@ -18,3 +18,17 @@
         <p>Если у вас еще нет аккаунта, <a asp-controller="Auth" asp-action="RegisterIndex">зарегистрируйтесь</a>.</p>
     </form>
 </div>
+
+@{
+    string message = TempData["Message"]?.ToString();
+}
+
+@if (!string.IsNullOrEmpty(message))
+{
+    <script>
+        var message = '@Html.Raw(message)';
+        window.onload = function () {
+            alert(message);
+        };
+    </script>
+}
