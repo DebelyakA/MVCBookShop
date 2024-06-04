@@ -20,5 +20,6 @@ namespace MVCBookShop.Models
         [Required]
         public Writing Writing { get; set; }
 
+
     }
 }

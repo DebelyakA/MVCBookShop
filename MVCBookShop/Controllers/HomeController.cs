@@ -25,7 +25,11 @@ namespace MVCBookShop.Controllers
                     .ThenInclude(a => a.Author)
                 .ToListAsync();
 
-            return View(books);
+            var unbooks = books.GroupBy(wb => wb.BookId)
+                                       .Select(g => g.First())
+                                       .ToList();
+
+            return View(unbooks);
         }
         public async Task<IActionResult> Details(int? id)
         {
