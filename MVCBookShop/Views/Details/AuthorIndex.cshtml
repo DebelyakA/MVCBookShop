@@ -1,14 +1,14 @@
 ﻿@model MVCBookShop.Models.Author
 
-<h2>@Model.SecondName @Model.FirstName</h2>
+<h2 style="font-weight: bold; font-style: italic;">@Model.SecondName @Model.FirstName</h2>
 
 
-<h3>Произведения:</h3>
+<h4>Произведения:</h4>
 
 @foreach (var writing in Model.Writings)
 {
     <div>
-        <h4><a href="@Url.Action("WritingIndex", "Details", new { id = writing.Id })">@writing.Title</a></h4>
+        <h3><a href="@Url.Action("WritingIndex", "Details", new { id = writing.Id })">@writing.Title</a></h3>
         <p>@writing.Year</p>
 
         <h5>Книги, содержащие это произведение:</h5>

@@ -40,3 +40,14 @@ body {
 .center-text {
     text-align: center;
 }
+
+.parent-container {
+    display: flex;
+    justify-content: center;
+}
+
+.center-div {
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
